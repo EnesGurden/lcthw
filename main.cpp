@@ -1,24 +1,45 @@
-#include <algorithm>
 #include <fmt/core.h>
-#include <vector>
+#include <iostream>
+#include <limits>
 
-using std::string, std::vector;
+using std::cin, std::cout, std::getline, std::string;
 using namespace fmt;
+
+void clearInput()
+{
+    std::streamsize eatme = std::numeric_limits<std::streamsize>::max();
+    cin.clear();
+    cin.ignore(eatme, '\n');
+}
+
+void printInputs(string name, int age)
+{
+    string quote;
+    println("Tell me something about you?");
+    getline(cin, quote);
+
+    println("-------------\nHello {}, you are {} years old.", name, age);
+
+    println("Something about you:");
+    cout << quote;
+}
 
 int main()
 {
-    vector<string> fruit = {
-        "Apple", "Orange", "Pear",
-        "Grape", "Durian", "Mango"
-    };
+    string name;
+    println("What's your name?");
+    cin >> name;
 
-    std::string target = "Orange";
+    int age;
+    println("What's your age?");
+    cin >> age;
 
-    auto found = std::find(fruit.begin(), fruit.end(), target);
-
-    if (found == std::end(fruit)) {
-        println("DIDN'T FIND IT");
-    } else {
-        println("FOUND: {}", *found);
+    while (!cin) {
+        clearInput();
+        println("Wrong, enter a number:");
+        cin >> age;
     }
+
+    clearInput();
+    printInputs(name, age);
 }
