@@ -1,10 +1,12 @@
-#include <iostream>
+#include <fmt/core.h>
 
-using namespace std;
+using namespace fmt;
 
 int main()
 {
-    cout << "We'll have cake, in the end." << endl;
-
+    print("Hello World!\n");
+    int foo = 62;
+    auto msg = fmt::format("An int {}", foo);
+    fmt::println("The result is: {}", msg);
     return 0;
 }
