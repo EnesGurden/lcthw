@@ -1,8 +1,9 @@
+#include <algorithm>
 #include <fmt/core.h>
 #include <vector>
 
-using namespace fmt;
 using std::string, std::vector;
+using namespace fmt;
 
 int main()
 {
@@ -11,9 +12,13 @@ int main()
         "Grape", "Durian", "Mango"
     };
 
-    for (auto name : fruit) {
-        println("Fruit {}", name);
-    }
+    std::string target = "Orange";
 
-    return 0;
+    auto found = std::find(fruit.begin(), fruit.end(), target);
+
+    if (found == std::end(fruit)) {
+        println("DIDN'T FIND IT");
+    } else {
+        println("FOUND: {}", *found);
+    }
 }
