@@ -2,13 +2,17 @@
 #include <vector>
 
 using namespace fmt;
-using std::vector;
+using std::string, std::vector;
 
 int main()
 {
-    vector<int> ages = { 12, 62, 23, 18, 5 };
-    for (size_t i = 0; i < ages.size(); i++) {
-        println("#{}. {}", i + 1, ages.at(i));
+    vector<string> fruit = {
+        "Apple", "Orange", "Pear",
+        "Grape", "Durian", "Mango"
+    };
+
+    for (auto name : fruit) {
+        println("Fruit {}", name);
     }
 
     return 0;
