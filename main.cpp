@@ -1,45 +1,33 @@
 #include <fmt/core.h>
 #include <iostream>
-#include <limits>
 
-using std::cin, std::cout, std::getline, std::string;
 using namespace fmt;
+using namespace std;
 
-void clearInput()
-{
-    std::streamsize eatme = std::numeric_limits<std::streamsize>::max();
-    cin.clear();
-    cin.ignore(eatme, '\n');
-}
-
-void printInputs(string name, int age)
-{
-    string quote;
-    println("Tell me something about you?");
-    getline(cin, quote);
-
-    println("-------------\nHello {}, you are {} years old.", name, age);
-
-    println("Something about you:");
-    cout << quote;
-}
-
+int characterCount(char* str, char ch);
 int main()
 {
-    string name;
-    println("What's your name?");
-    cin >> name;
+    const int MaxSize = 62;
+    char* str = new char[MaxSize];
+    println("Please enter a string(Max {} characters): ", MaxSize);
+    cin.getline(str, MaxSize);
+    char ch;
+    println("Which character count do you wanna know?");
+    cin >> ch;
+    int counter = characterCount(str, ch);
+    println("{} is used {} times in {} ", ch, counter, str);
+    return 0;
+}
 
-    int age;
-    println("What's your age?");
-    cin >> age;
+int characterCount(char* str, char ch)
+{
+    int counter = 0;
 
-    while (!cin) {
-        clearInput();
-        println("Wrong, enter a number:");
-        cin >> age;
+    while (*str) {
+        if (*str == ch) {
+            counter++;
+        }
+        str++;
     }
-
-    clearInput();
-    printInputs(name, age);
+    return counter;
 }
