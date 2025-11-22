@@ -1,33 +1,40 @@
 #include <fmt/core.h>
 #include <iostream>
 
-using namespace fmt;
 using namespace std;
+using namespace fmt;
 
-int characterCount(char* str, char ch);
+#define STRINGCONTROL 0
+// #define CHARCONTROL 1
+// #define INTCONTROL 2
+
 int main()
 {
-    const int MaxSize = 62;
-    char* str = new char[MaxSize];
-    println("Please enter a string(Max {} characters): ", MaxSize);
-    cin.getline(str, MaxSize);
-    char ch;
-    println("Which character count do you wanna know?");
-    cin >> ch;
-    int counter = characterCount(str, ch);
-    println("{} is used {} times in {} ", ch, counter, str);
-    return 0;
-}
-
-int characterCount(char* str, char ch)
-{
-    int counter = 0;
-
-    while (*str) {
-        if (*str == ch) {
-            counter++;
-        }
-        str++;
+#ifdef STRINGCONTROL
+    string str;
+    println("enter a string");
+    while (getline(cin, str) && str != "q") {
+        println("this is a string(q to quit)");
     }
-    return counter;
+#endif
+
+#ifdef CHARCONTROL
+    char ch;
+    println("enter a char");
+
+    while (cin >> ch && ch != 'q') {
+        println("this is a char(q to quit)");
+    }
+
+#endif
+
+#ifdef INTCONTROL
+    int i;
+    println("enter an int");
+    while (cin >> i) {
+        println("this is an int(press anything but not a number to quit)");
+    }
+#endif
+    println("program is over");
+    return 0;
 }
