@@ -1,50 +1,32 @@
 #include <iostream>
 
-int left(int num, int ct);
-char* left(const char* str, int n = 1); // 1 is a default argument of Argument 2
+template <typename T> // or class T
+void Swap(T& a, T& b);
 
 int main()
 {
     using namespace std;
-    const char* trip = "Hawaii!!";
-    const int n = 12345678;
-    int i;
-    char* temp;
-    for (i = 1; i < 10; i++) {
-        cout << left(n, i) << endl;
-        temp = left(trip, i);
-        cout << temp << endl;
-        delete[] temp; // point to temporary storage
-    }
+    int i = 10;
+    int j = 20;
+    cout << "i, j = " << i << ", " << j << ".\n";
+    cout << "Using compiler-generated int swapper:\n";
+    Swap(i, j); // generates void Swap(int &, int &)
+    cout << "Now i, j = " << i << ", " << j << ".\n";
+    double x = 24.5;
+    double y = 81.7;
+    cout << "x, y = " << x << ", " << y << ".\n";
+    cout << "Using compiler-generated double swapper:\n";
+    Swap(x, y); // generates void Swap(double &, double &)
+    cout << "Now x, y = " << x << ", " << y << ".\n";
+    // cin.get();
     return 0;
 }
-// This function returns the first ct digits of the number num.
-int left(int num, int ct)
+// function template definition
+template <typename T> // or class T
+void Swap(T& a, T& b)
 {
-    int digits = 1;
-    int long n = num;
-    if (ct == 0 || num == 0)
-        return 0;
-    while (n /= 10)
-        digits++;
-    if (digits > ct) {
-        ct = digits - ct;
-        while (ct--)
-            num /= 10;
-        return num;
-    } else
-        return num;
-}
-// This function returns a pointer to a new string consisting of the first n characters in the str string.
-char* left(const char* str, int n)
-{
-    if (n < 0)
-        n = 0;
-    char* p = new char[n + 1];
-    int i;
-    for (i = 0; i < n && str[i]; i++)
-        p[i] = str[i]; // copy characters
-    while (i <= n)
-        p[i++] = '\0'; // set rest of string to null
-    return p;
+    T temp;
+    temp = a;
+    a = b;
+    b = temp;
 }
