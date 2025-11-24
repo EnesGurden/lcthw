@@ -1,63 +1,53 @@
 #include <iostream>
 
-template <typename T>
-void Swap(T& a, T& b);
-struct job {
-    char name[40];
-    double salary;
-    int floor;
+template <typename T> // template A
+void ShowArray(T arr[], int n);
+template <typename T> // template B
+void ShowArray(T* arr[], int n);
+
+struct debts {
+    char name[50];
+    double amount;
 };
-// explicit specialization
-template <>
-void Swap<job>(job& j1, job& j2);
-void Show(job& j);
+
 int main()
 {
     using namespace std;
-    cout.precision(2);
-    cout.setf(ios::fixed, ios::floatfield);
-    int i = 10, j = 20;
-    cout << "i, j = " << i << ", " << j << ".\n";
-    cout << "Using compiler-generated int swapper:\n";
-    Swap(i, j); // generates void Swap(int &, int &)
-    cout << "Now i, j = " << i << ", " << j << ".\n";
-    job sue = { "Susan Yaffee", 73000.60, 7 };
-    job sidney = { "Sidney Taffee", 78060.72, 9 };
-    cout << "Before job swapping:\n";
-    Show(sue);
-    Show(sidney);
-    Swap(sue, sidney); // uses void Swap(job &, job &)
-    cout << "After job swapping:\n";
-    Show(sue);
-    Show(sidney);
+    struct debts mr_E[3] = {
+        { "Ima Wolfe", 2400.0 },
+        { "Ura Foxe", 1300.0 },
+        { "Iby Stout", 1800.0 }
+    };
+    int things[6] = { 13, 31, 103, 301, 310, 130 };
+    double* pd[3];
+    // set pointers to the amount members of the structures in mr_E
+    for (int i = 0; i < 3; i++)
+        pd[i] = &mr_E[i].amount;
+    cout << "Listing Mr. E's counts of things:\n";
+    // things is an array of int
+    ShowArray(things, 6); // uses template A
+    cout << "Listing Mr. E's debts:\n";
+    // pd is an array of pointers to double
+    ShowArray(pd, 3); // uses template B (more specialized)
     return 0;
 }
 
 template <typename T>
-void Swap(T& a, T& b) // general version
-{
-    T temp;
-    temp = a;
-    a = b;
-    b = temp;
-}
-// swaps just the salary and floor fields of a job structure
-template <>
-void Swap<job>(job& j1, job& j2) // specialization
-{
-    double t1;
-    int t2;
-    t1 = j1.salary;
-    j1.salary = j2.salary;
-    j2.salary = t1;
-    t2 = j1.floor;
-    j1.floor = j2.floor;
-    j2.floor = t2;
-}
-
-void Show(job& j)
+void ShowArray(T arr[], int n)
 {
     using namespace std;
-    cout << j.name << ": $" << j.salary
-         << " on floor " << j.floor << endl;
+    cout << "template A\n";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << ' ';
+    cout << endl;
+}
+
+template <typename T>
+void ShowArray(T* arr[], int n)
+{
+    using namespace std;
+    cout << "template B\n";
+    for (int i = 0; i < n; i++)
+        cout << *arr[i] << ' ';
+    cout << endl;
 }
